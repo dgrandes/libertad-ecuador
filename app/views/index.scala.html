@@ -1,7 +1,28 @@
-@(message: String)
+@()
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message)
-    
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Libertad - Ecuador") {
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            	<span class="icon-bar"></span>
+	            	<span class="icon-bar"></span>
+	            	<span class="icon-bar"></span>
+	          	</a>
+	          	<a class="brand" href="#">Indice</a>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+    	<div class="hero-unit">
+	    	<h1>Libertad - Ecuador</h1>
+	    	<p>Ven a disfrutar del Ecuador!</p> 
+
+	    	<h3>Feliz Cumple Marco!</h3>
+    	</div>
+    	<div id="lago"></div>
+    </div>
 }

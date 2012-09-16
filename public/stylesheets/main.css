@@ -1,0 +1,11 @@
+
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+#lago {
+	background-image: url(../images/lake.jpeg);
+	width: 500px;
+	height: 333px;
+}

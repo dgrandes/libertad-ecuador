@@ -1,0 +1,13 @@
+--- 
+applications: 
+  .: 
+    url: ${name}.${target-base}
+    framework: 
+      info: 
+        exec: 
+        description: Play Framework Application
+        mem: 256M
+      name: play
+    name: libertad-ecuador
+    mem: 256M
+    instances: 1

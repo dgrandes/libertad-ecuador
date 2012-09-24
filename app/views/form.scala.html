@@ -1,0 +1,84 @@
+@(venueForm: Form[VenueModel])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Add a Venue", nav = "add venue") {
+    
+    @helper.form(action = routes.Venue.submit) {
+        
+        <fieldset>
+            <legend>Venue Information</legend>
+            
+            @inputText(
+                venueForm("name"), 
+                '_label -> "Name", 
+                '_help -> "Please enter the venue name.",
+                '_error -> venueForm.globalError
+            )
+            
+           @inputText(
+            	venueForm("phone"),'_label -> "Phone",
+            	'_help -> "Enter your phone number."
+            )
+            
+            @inputText(
+                venueForm("email"), '_label -> "Email",
+                '_help -> "Enter a valid email address."
+            )
+            
+        </fieldset>
+        
+        
+        <fieldset>
+            
+            <legend>Venue Description</legend>
+            
+			@inputText(
+            	venueForm("tags"),'_label -> "Tags",
+            	'_help -> "Enter tags that describe you!."
+            )
+            
+			@textarea(
+                venueForm("description"), 
+                '_label -> "Description", 'cols -> 50
+            )
+            
+			@inputText(
+                venueForm("place.city"), 
+                '_label -> "City", 
+                '_help -> "Enter your city."
+            )
+            
+  			@inputText(
+                venueForm("place.state"), 
+                '_label -> "State",
+                '_help -> "Enter your state."
+            )
+            
+ 			@inputText(
+                venueForm("place.country"), 
+                '_label -> "Country", 
+                '_help -> "Enter your country."
+            )            
+		</fieldset>
+        
+        
+        <fieldset>
+            
+            @checkbox(
+                venueForm("accept"), 
+                '_label -> None, '_text -> "You aggree the Terms and conditions",
+                '_showConstraints -> false
+            )
+            
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Add Venue">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+        
+    }
+    
+}

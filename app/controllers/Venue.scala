@@ -65,8 +65,6 @@ object Venue extends Controller {
     venueForm.bindFromRequest.fold(
       // Form has errors, redisplay it
       errors => BadRequest(html.form(errors)),
-      
-      // We got a valid User value, display the summary
       venue => Ok(html.summary(venue))
     )
   }

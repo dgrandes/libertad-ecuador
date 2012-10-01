@@ -14,3 +14,11 @@ case class LocationModel(
 	state: String,
 	country: String
 )
+
+object VenueModel{
+	def all(): List[VenueModel] = Nil
+
+	def create(label: String){}
+
+	def delete(id: Long) {}
+}

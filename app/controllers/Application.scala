@@ -7,8 +7,8 @@ object Application extends Controller {
   
   def index = Action {
   	try{
-  		val vcap = sys.env("VCAP_SERVICES")
-  		Ok(views.html.index(vcap))
+  		
+  		Ok(views.html.index(""))
   	}catch{
   		case e: NoSuchElementException => Ok(views.html.index("No Such Element Exception"))
   	}

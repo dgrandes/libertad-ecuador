@@ -18,7 +18,6 @@ Drop Table if exists Segments;
 Drop Table if exists SegmentCategories;
 Drop Table if exists Files;
 
-
 Create Table IF NOT EXISTS SegmentCategories(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,

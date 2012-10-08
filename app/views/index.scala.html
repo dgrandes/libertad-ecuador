@@ -1,4 +1,4 @@
-@(message: String)
+@(message: String,page: Page[SegmentCategoryModel])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -11,4 +11,33 @@
                 <h3>Encuentra las opciones turisticas que tiene el Ecuador!</h3>
             </div>
             <div id="lago"></div>
+
+            @Option(page.items).filterNot(_.isEmpty).map { segcats =>
+        
+		        <table class="computers zebra-striped">
+		            <thead>
+		                <tr>
+		                    <th>Name</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+
+		                @segcats.map { 
+		                    case (segcat) => {
+		                        <tr>
+		                            <td>@segcat.name</td>
+		                        </tr>
+		                    }
+		                }
+
+		            </tbody>
+		        </table>
+		        
+		    }.getOrElse {
+		        
+		        <div class="well">
+		            <em>Nothing to display</em>
+		        </div>
+		        
+		    }
 }

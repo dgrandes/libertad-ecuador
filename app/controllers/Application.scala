@@ -3,16 +3,12 @@ package controllers
 import play.api._
 import play.api.mvc._
 
+import models._
+
 object Application extends Controller {
   
   def index = Action {
-  	try{
-  		
-  		Ok(views.html.index(""))
-  	}catch{
-  		case e: NoSuchElementException => Ok(views.html.index("No Such Element Exception"))
-  	}
-    
+	Ok(views.html.index("",SegmentCategoryModel.list()))    
   }
   
 }

@@ -13,15 +13,6 @@ case class SegmentCategoryModel(
 	name: String
 )
 
-
-/**
- * Helper for pagination.
- */
-case class Page[A](items: Seq[A], page: Int, offset: Long, total: Long) {
-  lazy val prev = Option(page - 1).filter(_ >= 0)
-  lazy val next = Option(page + 1).filter(_ => (offset + items.size) < total)
-}
-
 object SegmentCategoryModel{
 
 	val simple =  {
@@ -64,8 +55,25 @@ object SegmentCategoryModel{
 	}
 
 	def findById(id: Long) : Option[SegmentCategoryModel] = {
-    DB.withConnection { implicit connection =>
-      SQL("select * from SegmentCategories where id = {id}").on('id -> id).as(SegmentCategoryModel.simple.singleOpt)
+    	DB.withConnection { implicit connection =>
+      		SQL("select * from SegmentCategories where id = {id}").on('id -> id).as(SegmentCategoryModel.simple.singleOpt)
+    	}
+	}
+
+    def add(segmentCategory: SegmentCategoryModel): ModelResponse = {
+    	try{
+    		DB.withConnection{ implicit c =>
+    			SQL("insert into SegmentCategories(name) values ({name})").on('name -> segmentCategory.name).executeUpdate()
+    		}
+    		ModelResponse(None, None)
+    	}catch{
+    		case e:Exception => {
+    			if(e.getMessage.contains("CONSTRAINT_INDEX_B ON PUBLIC.SEGMENTCATEGORIES(NAME)"))
+    				ModelResponse(None, Some("Segment Category Names must be unique!"))
+    			else
+    				ModelResponse(None, Some(e.getMessage))
+    		}
+    	}
     }
-  }
+  
 }

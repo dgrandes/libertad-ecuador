@@ -1,0 +1,29 @@
+@(segmentCategoryForm: Form[SegmentCategoryModel])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Add a Segment Category", nav = "add a Segment Category") {
+    
+    @helper.form(action = routes.Application.saveSegmentCategory) {
+        
+        <fieldset>
+            <legend>Segment Category</legend>
+            
+            @inputText(
+                segmentCategoryForm("name"), 
+                '_label -> "Name", 
+                '_help -> "Please enter a name",
+                '_error -> segmentCategoryForm.globalError
+            )
+            
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Add">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+        
+    }
+    
+}

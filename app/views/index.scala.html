@@ -1,4 +1,4 @@
-@(message: String,page: Page[SegmentCategoryModel])
+@(message: String,page: Page[SegmentCategoryModel])(implicit flash: play.api.mvc.Flash)
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -10,6 +10,12 @@
 
                 <h3>Encuentra las opciones turisticas que tiene el Ecuador!</h3>
             </div>
+
+            @flash.get("success").map { message =>
+		        <div class="alert-message warning">
+		            <strong>Done!</strong> @message
+		        </div>
+		    }
             <div id="lago"></div>
 
             @Option(page.items).filterNot(_.isEmpty).map { segcats =>

@@ -20,13 +20,14 @@ Drop Table if exists Files;
 
 Create Table IF NOT EXISTS SegmentCategories(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
-	name varchar(255) NOT NULL,
+	name varchar(255) NOT NULL UNIQUE,
 	PRIMARY KEY (id)
 );
 
 Create Table IF NOT EXISTS Segments(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
 	parentId bigint(20) NOT NULL,
+	name varchar(255) NOT NULL,
 	FOREIGN KEY (parentId) REFERENCES SegmentCategories(id) ON DELETE CASCADE,
 	PRIMARY KEY (id)
 );

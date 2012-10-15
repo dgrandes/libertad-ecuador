@@ -12,3 +12,4 @@ dist
 .settings/
 .target/
 .bin
+bin

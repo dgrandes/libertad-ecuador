@@ -29,7 +29,7 @@ object Application extends Controller {
   		)(SegmentCategoryModel.apply)(SegmentCategoryModel.unapply)
   	)
 
-  def addSegmentCategory = Action {
+  def addSegmentCategory = Action { implicit request =>
   	Ok(html.formSegmentCategory(segmentCategoryForm))
   }
 
@@ -40,11 +40,50 @@ object Application extends Controller {
 
           val resp = SegmentCategoryModel.add(segmentCategory)
           resp.errorMessage match{
-            case Some(x) => Home.flashing("success" -> x)
-            case None =>   Home.flashing("success" -> "Segment Category %s has been added".format(segmentCategory.name))
-
+            case Some(x) => Redirect(routes.Application.addSegmentCategory).flashing("success" -> x)
+            case None =>   Home.flashing("success" -> "Segment Category '%s' has been added".format(segmentCategory.name))
             }
           })
 
+  }
+
+  def viewSegmentCategory(id: Long) = Action { implicit request =>
+    Ok(html.displaySegmentCategory(SegmentCategoryModel.findById(id)))
+
+  }
+
+  def viewSegment(id: Long) = TODO
+
+  def deleteSegmentCategory(id: Long) = Action { implicit request =>
+    Ok("CategoryTest")
+  }
+
+  def deleteSegmentCategoryConfirmed(name: String) = Action { implicit request =>
+    Home.flashing("success" -> "Segment Category '%s' has been deleted!".format(name))
+  }
+
+  val segmentForm = Form(
+    mapping(
+    "id" -> ignored(NotAssigned:Pk[Long]),
+    "name" -> nonEmptyText,
+    "segmentCategoryId" -> longNumber
+    )(SegmentModel.apply)(SegmentModel.unapply)
+  )
+
+  def addSegment = Action { implicit request =>
+    Ok(html.formSegment(segmentForm))
+  }
+
+  def saveSegment = Action { implicit request =>
+    segmentForm.bindFromRequest.fold(
+        formWithErrors => BadRequest(html.formSegment(formWithErrors)),
+        segment => {
+          val resp = SegmentModel.add(segment)
+          resp.errorMessage match {
+              case Some(x) => Redirect(routes.Application.addSegment).flashing("error" -> x)
+              case None => Home.flashing("success" -> "Segment '%s' has been added!".format(segment.name))
+          }
+        }
+      )
   }
 }

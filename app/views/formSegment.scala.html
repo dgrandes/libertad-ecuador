@@ -1,0 +1,50 @@
+@(segmentForm: Form[SegmentModel])(implicit flash: play.api.mvc.Flash)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Add a Segment", nav = "add a Segment") {
+    
+
+
+    @flash.get("error").map { message =>
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h4>Error!</h4> @message
+        </div>
+    }
+    @helper.form(action = routes.Application.saveSegment) {
+        
+        <fieldset>
+            <legend>Add a Segment</legend>
+
+           @select(
+                segmentForm("segmentCategoryId"),
+                SegmentCategoryModel.options,
+                '_label -> "",
+                '_default -> "-- Choose a Segment Category--",
+                '_showConstraints -> false
+            )
+            
+            @inputText(
+                segmentForm("name"), 
+                '_label -> "Name", 
+                '_help -> "Please enter a name",
+                '_error -> segmentForm.globalError
+            )
+            
+            <p>
+            Can't find the segment category you want? <a href="@routes.Application.addSegmentCategory">Add one!</a>
+            </p>
+        </fieldset>
+
+        
+        
+        <div class="actions">
+            <input type="submit" class="btn primary" value="Add Segment">
+            <a href="@routes.Application.index" class="btn">Cancel</a>
+        </div>
+        
+    }
+    
+}

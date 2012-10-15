@@ -1,0 +1,56 @@
+@(segmentCategory: Option[SegmentCategoryModel])(implicit flash: play.api.mvc.Flash)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Segment Category", nav = "Segment Category") {
+    
+    @flash.get("success").map { message =>
+        <div class="alert-message warning">
+            <strong>Done!</strong> @message
+    </div>
+    }
+
+
+    <fieldset>
+            @segmentCategory match{
+            case Some(s) => {
+                <legend>@s.name</legend>
+
+            @Option(SegmentModel.listSegmentsFrom(s.id.get).items).filterNot(_.isEmpty).map { c =>
+        
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Segments in this Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @c.map { 
+                                case (c) => {
+                                    <tr>
+                                        <td><a href="@routes.Application.viewSegment(c.id.get)">@c.name</a></td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                    
+                }.getOrElse {
+                    
+                    <div class="well">
+                        <em>There are no segments in this Category!</em>
+                    </div>
+                    
+                }
+
+                <a href="#" delete-route="@routes.Application.deleteSegmentCategory(s.id.get)" id="delete-category" class="btn btn-danger">Delete Category</a>
+            }
+            case None => {
+                <legend>Oops, unknown Segment Category!</legend>
+            }
+        }
+    <fieldset>
+}

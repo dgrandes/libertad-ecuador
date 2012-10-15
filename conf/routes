@@ -7,8 +7,22 @@ GET     /                           controllers.Application.index
 GET 	/venues						controllers.Venue.index
 POST 	/venues/submit				controllers.Venue.submit
 
+
+
 GET 	/segmentCategory/add		controllers.Application.addSegmentCategory
 POST 	/segmentCategory/add		controllers.Application.saveSegmentCategory
+GET 	/segmentCategory/view/:id	controllers.Application.viewSegmentCategory(id:Long)
+
+
+DELETE	/segmentCategory/delete/:id		controllers.Application.deleteSegmentCategory(id:Long)
+GET 	/segmentCategory/deleteConfirmed/:name	controllers.Application.deleteSegmentCategoryConfirmed(name:String)
+
+GET 	/segment/viewSegment:id		controllers.Application.viewSegment(id:Long)
+
+GET 	/segment/add				controllers.Application.addSegment
+POST 	/segment/add				controllers.Application.saveSegment
+
+
 
 
 # Map static resources from the /public folder to the /assets URL path

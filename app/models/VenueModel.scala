@@ -6,6 +6,7 @@ case class VenueModel(
   email: String,
   tags: Option[String],
   description: Option[String],
+  segmentId: Long,
   place: LocationModel
 )
 

@@ -7,7 +7,7 @@ import play.api.data._
 import play.api.data.Forms._
 
 object Venue extends Controller {
-  
+
     /**
    * Sign Up Form definition.
    *
@@ -23,6 +23,7 @@ object Venue extends Controller {
       "email" -> email,
       "tags" ->optional(text),
       "description" ->optional(text),
+      "segmentId" -> longNumber,
       "place" -> mapping(
           "city" -> nonEmptyText,
           "state" -> nonEmptyText,
@@ -39,11 +40,11 @@ object Venue extends Controller {
     // so we have to define custom binding/unbinding functions
     {
       // Binding: Create a User from the mapping result (ignore the second password and the accept field)
-      (name, phone, email, tags, description, place, _) => VenueModel(name, phone, email, tags, description, place) 
+      (name, phone, email, tags, description, segmentId, place, _) => VenueModel(name, phone, email, tags, description, segmentId, place) 
     } 
     {
       // Unbinding: Create the mapping values from an existing User value
-      (venue: VenueModel) => Some((venue.name, venue.phone, venue.email,venue.tags,  venue.description, venue.place, false))
+      (venue: VenueModel) => Some((venue.name, venue.phone, venue.email,venue.tags,  venue.description, venue.segmentId, venue.place, false))
     }.verifying(
       // Add an additional constraint: The username must not be taken (you could do an SQL request here)
       "This name is not available",
@@ -55,7 +56,7 @@ object Venue extends Controller {
    * Display an empty form.
    */
   def index = Action {
-    Ok(html.form(venueForm));
+    Ok(html.formVenue(venueForm));
   }
   
     /**
@@ -64,7 +65,7 @@ object Venue extends Controller {
   def submit = Action { implicit request =>
     venueForm.bindFromRequest.fold(
       // Form has errors, redisplay it
-      errors => BadRequest(html.form(errors)),
+      errors => BadRequest(html.formVenue(errors)),
       venue => Ok(html.summary(venue))
     )
   }

@@ -67,13 +67,20 @@ object SegmentCategoryModel{
     		}
     		ModelResponse(None, None)
     	}catch{
-    		case e:Exception => {
+    		case e:Exception => { 
     			if(e.getMessage.contains("CONSTRAINT_INDEX_B ON PUBLIC.SEGMENTCATEGORIES(NAME)"))
-    				ModelResponse(None, Some("Segment Category Names must be unique!"))
+    				ModelResponse(None, Some("Segment Category Names must be unique! '%s' already exists!".format(segmentCategory.name)))
     			else
     				ModelResponse(None, Some(e.getMessage))
     		}
     	}
     }
+
+   /**
+   * Construct the Map[String,String] needed to fill a select options set.
+   */
+  def options: Seq[(String,String)] = DB.withConnection { implicit connection =>
+    SQL("select * from SegmentCategories order by name").as(SegmentCategoryModel.simple *).map(s => s.id.toString -> s.name)
+  }
   
 }

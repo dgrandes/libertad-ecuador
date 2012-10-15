@@ -28,6 +28,18 @@
             )
             
         </fieldset>
+
+        <fieldset>
+            <legend>Venue Segment</legend>
+            @select(
+                venueForm("Segment"),
+                SegmentModel.options,
+                'label -> "Segment",'_default -> "-- Choose a Segment --",
+                '_showConstraints -> false
+            )
+
+            Can't find the segment you want? <a href="@routes.Application.addSegment">Add one!</a>
+        </fieldset>
         
         
         <fieldset>

@@ -32,9 +32,18 @@
         <fieldset>
             <legend>Venue Segment</legend>
             @select(
+                venueForm("Segment Category"),
+                SegmentCategoryModel.options,
+                'label -> "Segment Category", '_default -> "-- Choose a Segment Category --",
+                'id -> "segmentCategoryOption",
+                '_showConstraints -> false
+            )
+
+            @select(
                 venueForm("Segment"),
-                SegmentModel.options,
+                List(),
                 'label -> "Segment",'_default -> "-- Choose a Segment --",
+                'id -> "segmentOption",
                 '_showConstraints -> false
             )
 
@@ -80,7 +89,7 @@
             
             @checkbox(
                 venueForm("accept"), 
-                '_label -> None, '_text -> "You aggree the Terms and conditions",
+                '_label -> None, '_text -> "You agree the Terms and conditions",
                 '_showConstraints -> false
             )
             

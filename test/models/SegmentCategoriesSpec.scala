@@ -5,6 +5,12 @@ import org.specs2.mutable._
 import play.api.test._
 import play.api.test.Helpers._
 
+
+import play.api.libs.json._
+import play.api.libs.json.Json._
+import play.api.libs.json.Writes._
+
+
 class SegmentCategoriesSpec extends Specification{
 
 	import models._
@@ -28,6 +34,15 @@ class SegmentCategoriesSpec extends Specification{
 	      
 	        restaurantes.name must equalTo("Restaurants")
 	      }
+		}
+		"return the seq of options" in {
+			running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+        
+	        val options = SegmentModel.optionsForSegment(1)
+	      	val resp = toJson(options.map(x => Map(x._1 -> x._2)))
+	      	println(resp)
+	      	true
+	      }	
 		}
 	}
 }

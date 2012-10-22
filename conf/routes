@@ -22,6 +22,8 @@ GET 	/segment/viewSegment:id		controllers.Application.viewSegment(id:Long)
 GET 	/segment/add				controllers.Application.addSegment
 POST 	/segment/add				controllers.Application.saveSegment
 
+GET 	/segmentCategory/getSegments/:id 	controllers.Application.getSegmentsForCategory(id:Long)
+
 
 
 

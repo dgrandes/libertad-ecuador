@@ -85,5 +85,9 @@ object SegmentModel{
   def options: Seq[(String,String)] = DB.withConnection { implicit connection =>
     SQL("select * from Segments order by name").as(SegmentModel.simple *).map(s => s.id.toString -> s.name)
   }
+
+  def optionsForSegment(id: Long): Seq[(String, String)] = DB.withConnection { implicit connection =>
+    SQL("select * from Segments where Segments.segmentCategoryId = {id} order by name").on('id -> id).as(SegmentModel.simple *).map(s => s.id.toString -> s.name)
+  }
   
 }

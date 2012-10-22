@@ -22,15 +22,38 @@
           }
       
       }]);
-    console.log(deleteRoute);
-
   }
 
-  var methods = {
-    init : function( options ) { 
-      $("body").on("click","#delete-category", function(event){
+  function retrieveSegmentsFromServer(target){
+    var id = target.val();
+    if(isNaN(parseInt(id))){
+        $("#segmentOption option:gt(0)").remove();
+        return;
+    }
+    $.ajax({
+      url: "/segmentCategory/getSegments/"+id,
+      type: "GET"
+    }).done(function(data, textStatus, jqXHR){
+      var sel = $("#segmentOption");
+      $("#segmentOption option:gt(0)").remove();
+      $.each(data, function(key, value){
+        sel.append($("<option></option>").attr("value", key).text(value))
+      })
+    });
+  }
+
+  function bindings(){
+    $("body").on("click","#delete-category", function(event){
           confirmDelete($(event.target).attr("delete-route"));
       });
+    $("body").on("change","#segmentCategoryOption", function(event){
+          retrieveSegmentsFromServer($(event.target));
+    });
+  }
+  var methods = {
+    init : function( options ) { 
+      bindings();
+
     },
     show : function( ) {
       // IS

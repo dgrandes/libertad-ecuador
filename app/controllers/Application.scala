@@ -5,6 +5,10 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 
+import play.api.libs.json._
+import play.api.libs.json.Json._
+import play.api.libs.json.Writes._
+
 import anorm._
 
 import views._
@@ -50,6 +54,11 @@ object Application extends Controller {
   def viewSegmentCategory(id: Long) = Action { implicit request =>
     Ok(html.displaySegmentCategory(SegmentCategoryModel.findById(id)))
 
+  }
+
+  def getSegmentsForCategory(id:Long) = Action{ implicit request =>
+    val options = SegmentModel.optionsForSegment(id)
+    Ok(toJson(options toMap))
   }
 
   def viewSegment(id: Long) = TODO

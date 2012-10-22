@@ -55,7 +55,10 @@ object Application extends Controller {
   def viewSegment(id: Long) = TODO
 
   def deleteSegmentCategory(id: Long) = Action { implicit request =>
-    Ok("CategoryTest")
+    SegmentCategoryModel.delete(id) match {
+      case None => BadRequest("invalid id")
+      case Some(x) => Ok(x)
+    }
   }
 
   def deleteSegmentCategoryConfirmed(name: String) = Action { implicit request =>

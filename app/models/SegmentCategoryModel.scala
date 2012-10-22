@@ -82,5 +82,19 @@ object SegmentCategoryModel{
   def options: Seq[(String,String)] = DB.withConnection { implicit connection =>
     SQL("select * from SegmentCategories order by name").as(SegmentCategoryModel.simple *).map(s => s.id.toString -> s.name)
   }
+
+  def delete(id: Long):Option[String] = {
+  	 findById(id) match {
+  		case Some(x) => {
+  			val name  = x.name
+  			    DB.withConnection { implicit connection =>
+     			 SQL("delete from SegmentCategories where id = {id}").on('id -> id).executeUpdate()
+    		}
+    		Some(name)
+  		}
+  		case None => None
+  	}
+
+  }
   
 }

@@ -40,8 +40,7 @@ class SegmentCategoriesSpec extends Specification{
         
 	        val options = SegmentModel.optionsForSegment(1)
 	      	val resp = toJson(options.map(x => Map(x._1 -> x._2)))
-	      	println(resp)
-	      	true
+	      	resp.toString must equalTo("[{\"1\":\"Dinner\"},{\"2\":\"Fast Food\"},{\"3\":\"Lunch\"},{\"4\":\"Take out\"}]")
 	      }	
 		}
 	}

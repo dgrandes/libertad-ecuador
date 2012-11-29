@@ -25,14 +25,14 @@ object SegmentModel{
 	}
 
 	def findById(id: Long) : Option[SegmentModel] = {
-    	DB.withConnection { implicit connection =>
+    	DAO.withConnection { implicit connection =>
       		SQL("select * from Segments where id = {id}").on('id -> id).as(SegmentModel.simple.singleOpt)
     	}
 	}
 
     def add(segment: SegmentModel): ModelResponse = {
     	try{
-    		DB.withConnection{ implicit c =>
+    		DAO.withConnection{ implicit c =>
     			SQL("insert into Segments(name, segmentCategoryId) values ({name},{segmentCategoryId})").on(
     				'name -> segment.name,
     				'segmentCategoryId -> segment.segmentCategoryId).executeUpdate()
@@ -49,7 +49,7 @@ object SegmentModel{
     	orderCrit: String = "asc", filter: String = "%"): Page[SegmentModel] = {
     	val offset = pageSize * page
 
-    	DB.withConnection{ implicit c =>
+    	DAO.withConnection{ implicit c =>
     		val segments = SQL (
     			"""
     				select id, name, segmentCategoryId from Segments
@@ -82,11 +82,11 @@ object SegmentModel{
    /**
    * Construct the Map[String,String] needed to fill a select options set.
    */
-  def options: Seq[(String,String)] = DB.withConnection { implicit connection =>
+  def options: Seq[(String,String)] = DAO.withConnection { implicit connection =>
     SQL("select * from Segments order by name").as(SegmentModel.simple *).map(s => s.id.toString -> s.name)
   }
 
-  def optionsForSegment(id: Long): Seq[(String, String)] = DB.withConnection { implicit connection =>
+  def optionsForSegment(id: Long): Seq[(String, String)] = DAO.withConnection { implicit connection =>
     SQL("select * from Segments where Segments.segmentCategoryId = {id} order by name").on('id -> id).as(SegmentModel.simple *).map(s => s.id.toString -> s.name)
   }
   

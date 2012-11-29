@@ -18,6 +18,7 @@ Drop Table if exists Segments;
 Drop Table if exists SegmentCategories;
 Drop Table if exists Files;
 
+
 Create Table IF NOT EXISTS SegmentCategories(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL UNIQUE,
@@ -26,13 +27,13 @@ Create Table IF NOT EXISTS SegmentCategories(
 
 Create Table IF NOT EXISTS Segments(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
-	parentId bigint(20) NOT NULL,
+	segmentCategoryId bigint(20) NOT NULL,
 	name varchar(255) NOT NULL,
-	FOREIGN KEY (parentId) REFERENCES SegmentCategories(id) ON DELETE CASCADE,
+	FOREIGN KEY (segmentCategoryId) REFERENCES SegmentCategories(id) ON DELETE CASCADE,
 	PRIMARY KEY (id)
 );
 
-CREATE INDEX fkSegmentParentId ON Segments(parentId);
+CREATE INDEX fkSegmentParentId ON Segments(segmentCategoryId);
 
 Create Table IF NOT EXISTS Tags(
 	id bigint(20) NOT NULL AUTO_INCREMENT,

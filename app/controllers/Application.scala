@@ -21,6 +21,7 @@ object Application extends Controller {
    */
   val Home = Redirect(routes.Application.index)
 
+  val environment = "test"
   
   def index = Action {
     implicit request => Ok(views.html.index("",SegmentCategoryModel.list()))    

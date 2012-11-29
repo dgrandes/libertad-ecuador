@@ -9,17 +9,13 @@ class Segmen extends Specification{
 
 	import models._
 
-	"Venue Model" should {
-		"be retrieved by id" in {
+	"Venue Models Spec" should{
+		"be able to retrieve by id" in {
 			true
-	/*		running(FakeApplication(additionalConfiguration = inMemoryDatabase("default-test"))) {
-        
-	        val Some(venue) = VenueModel.findById(21)
-	      
-	        macintosh.name must equalTo("Macintosh")
-	        macintosh.introduced must beSome.which(dateIs(_, "1984-01-24"))  
-	        
-	      }*/
 		}
+		"be able to have several sub-segments that match the segments" in {
+			true
+		} 
+		
 	}
 }

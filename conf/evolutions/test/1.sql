@@ -82,15 +82,12 @@ CREATE INDEX fkTownsProvinceId on Towns(idProvince);
 Create Table IF NOT EXISTS Venues(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,
-	idSegment bigint(20) NOT NULL,
-	idTown bigint(20) NOT NULL,
-	FOREIGN KEY (idSegment) REFERENCES Segments(id) ON DELETE CASCADE,
+	idTown bigint(20),
 	FOREIGN KEY (idTown) REFERENCES Towns(id) ON DELETE CASCADE,
 	PRIMARY KEY (id)
 );
 
 
-CREATE INDEX fkVenueSegmentId on Venues(idSegment);
 CREATE INDEX fkVenueTownId on Venues(idTown);
 
 
@@ -114,6 +111,18 @@ CREATE Table IF NOT EXISTS VenueRegions(
 
 CREATE INDEX fkVenueRegionsVenueId on VenueRegions(idVenue);
 CREATE INDEX fkVenueRegionsRegionId on VenueRegions(idRegion);
+
+CREATE TABLE if NOT EXISTS VenueSegments(
+	idVenue bigint(20) NOT NULL,
+	idSegment bigint(20) NOT NULL,
+	FOREIGN KEY (idVenue) REFERENCES Venues(id) ON DELETE CASCADE,
+	FOREIGN KEY (idSegment) REFERENCES Segments(id) ON DELETE CASCADE,
+);
+
+
+
+CREATE INDEX fkVenueSegmentsVenueId on VenueSegments(idVenue);
+CREATE INDEX fkVenueSegmentsSegmentId on VenueSegments(idSegment);
 
 CREATE Table IF NOT EXISTS Markers(
 	id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -183,6 +192,7 @@ CREATE INDEX fkFilesDataFileId on FilesData(idFile);
 
 # --- !Downs
 Drop Table if exists VenueTags;
+Drop Table if exists VenueSegments;
 Drop Table if exists SegmentTranslations;
 Drop Table if exists Languages;
 Drop Table if exists FilesData;

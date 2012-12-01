@@ -20,7 +20,7 @@ import javax.sql._
 import com.jolbox.bonecp._
 import com.jolbox.bonecp.hooks._
 
-
+import config.Global
 
 case class Page[A](items: Seq[A], page: Int, offset: Long, total: Long) {
   lazy val prev = Option(page - 1).filter(_ >= 0)
@@ -31,6 +31,6 @@ case class ModelResponse(response: Option[AnyRef], errorMessage: Option[String])
 object DAO{
 
 	def withConnection[A](block: Connection => A)(implicit app: Application): A = {
-	    DB.withConnection(config.Global.env)(block)
+	    DB.withConnection(Global.env)(block)
 	  }
 }
